@@ -36,5 +36,15 @@ app.post('/edit/:id', (req, res) => {
   });
 });
 
+//
+app.get('/user/:id', (req, res) => {
+  const userId = req.params.id;
+  db.get('SELECT * FROM users WHERE id = ?', [userId], (err, user) => {
+    if (err || !user) {
+      return res.send('Usuario no encontrado');
+    }
+    res.render('user', { user });
+  });
+});
 const PORT = process.env.PORT || 1000;
 app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
